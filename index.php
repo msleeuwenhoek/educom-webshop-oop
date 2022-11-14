@@ -1,4 +1,7 @@
 <?php
+
+use FTP\Connection;
+
 session_start();
 
 include 'validations.php';
@@ -57,89 +60,41 @@ function processRequest($page)
 // Show page content depending on requested page
 function showResponsePage($data)
 {
-    $current_page = $data['page'];
-    if ($current_page !== 'unknown') {
-        include "$current_page.php";
+    switch ($data['page']) {
+        case 'home':
+            include_once "./views/home_doc.php";
+            $view = new HomeDoc();
+            $view->show();
+            break;
+        case 'about':
+            include_once "./views/about_doc.php";
+            $view = new AboutDoc();
+            $view->show();
+            break;
+        case 'contact':
+            include_once "./views/contact_form.php";
+            $view = new ContactForm();
+            $view->show();
+            break;
+        case 'login':
+            include_once "./views/login_form.php";
+            $view = new LoginForm();
+            $view->show();
+            break;
+        case 'register':
+            include_once "./views/registration_form.php";
+            $view = new RegistrationForm();
+            $view->show();
+            break;
+        case 'unknown':
+            include_once "./views/basic_doc.php";
+            $view = new BasicDoc();
+            $view->show();
+            break;
     }
-    showDocumentStart($current_page);
-    if ($current_page !== 'unknown') {
-        echo $header;
-    }
-    showMenu($data);
-    if ($current_page !== 'unknown') {
-        showContent($data);
-    } else {
-        echo "Sorry, we couldn't find the page you were looking for";
-    }
-    showFooter();
-    showDocumentEnd();
 }
 
 // Main
 $page = getRequestedPage();
 $data = processRequest($page);
 showResponsePage($data);
-
-
-// Show default page content
-
-function showDocumentStart($tab_title)
-{
-    echo "<!DOCTYPE html>
-        <html lang='en'>
-        <head>
-            <meta charset='UTF-8'>
-            <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-            <title>$tab_title</title>
-            <link rel='stylesheet' href='./CSS/index.css' />
-        </head>
-        <body>
-        <div class='wrapper'>";
-}
-
-function showMenu($data)
-{
-    $pages = ['home', 'about', 'contact', 'register', 'login', 'logout'];
-    echo '<ul class="menu">';
-
-    foreach ($pages as $page) {
-        if ($page === 'logout') {
-            if (isset($_SESSION['username'])) {
-                echo '<li>
-                <a
-                href="http://localhost/educom-webshop-basis-1667987701/index.php?page=' . $page . '"
-                >' . strtoupper($page) . " " . strtoupper($_SESSION['username'])  . '</a>                </li>';
-            }
-        } elseif ($page === 'login' || $page === 'register') {
-            if (!isset($_SESSION['username'])) {
-                echo '<li>
-                <a
-                href="http://localhost/educom-webshop-basis-1667987701/index.php?page=' . $page . '"
-                >' . strtoupper($page) .  '</a>
-                </li>';
-            }
-        } else {
-            echo '<li>
-            <a
-            href="http://localhost/educom-webshop-basis-1667987701/index.php?page=' . $page . '"
-            >' . strtoupper($page) . '</a>
-             </li>';
-        }
-    };
-    echo "</ul>";
-}
-
-function showFooter()
-{
-    echo '<footer>
-    <div>&copy; 2022 M. Sleeuwenhoek</div>
-    </footer>';
-}
-
-function showDocumentEnd()
-{
-    echo "</div>
-    </body>
-    </html>";
-}

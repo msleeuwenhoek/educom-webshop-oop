@@ -16,7 +16,7 @@ class BasicDoc extends HtmlDoc
         foreach ($pages as $page) {
             echo '<li>
             <a
-            href="http://localhost/educom-webshop-basis-1667987701/index.php?page=' . $page . '"
+            href="http://localhost/educom-webshop-oop-1668153190/index.php?page=' . $page . '"
             >' . strtoupper($page) . '</a>
              </li>';
         }
@@ -26,7 +26,7 @@ class BasicDoc extends HtmlDoc
 
     protected function showContent()
     {
-        echo "<div>This is the content of the page</div>";
+        echo "<div>Sorry, couldn't find the page you were looking for</div>";
     }
     private function showFooter()
     {
