@@ -12,13 +12,13 @@ class LoginForm extends FormsDoc
     protected function showForm()
     {
         echo '<label for="email">Email:</label>
-            <input class="form-field" type="text" id="email" name="email" value="" />
-            <span class="error">* </span>
+            <input class="form-field" type="text" id="email" name="email" value="' . $this->model->email . '" />
+            <span class="error">* ' . $this->model->emailErr . '</span>
 
             <br />
             <label for="password">Password:</label>
-            <input class="form-field" type="text" id="password" name="password" value="" />
-            <span class="error">* </span>
+            <input class="form-field" type="text" id="password" name="password" value="' . $this->model->password . '" />
+            <span class="error">*' . $this->model->passwordErr . ' </span>
 
             <br />
 

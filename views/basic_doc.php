@@ -2,8 +2,14 @@
 require_once "html_doc.php";
 
 
+
 class BasicDoc extends HtmlDoc
 {
+    protected $model;
+    public function __construct($pageModel)
+    {
+        $this->model = $pageModel;
+    }
 
     protected function showHeader()
     {
@@ -11,15 +17,14 @@ class BasicDoc extends HtmlDoc
     }
     private function showMenu()
     {
-        $pages = ['home', 'about', 'contact', 'register', 'login', 'logout'];
         echo '<ul class="menu">';
 
-        foreach ($pages as $page) {
+        foreach ($this->model->pages as $page => $buttonText) {
             echo '<li>
             <a
-            href="http://localhost/educom-webshop-oop-1668153190/index.php?page=' . $page . '"
-            >' . strtoupper($page) . '</a>
-             </li>';
+            href="index.php?page=' . $page . '"
+            >' . $buttonText . '</a>
+            </li>';
         }
 
         echo "</ul>";

@@ -2,7 +2,6 @@
 
 require_once "./models/page_model.php";
 
-
 class PageController
 {
     private $model;
@@ -21,22 +20,39 @@ class PageController
     {
         switch ($this->model->page) {
             case 'contact':
-                $data = validateContact();
-                if ($data['valid'] === true) {
+                require_once "./models/user_model.php";
+                $this->model = new User();
+                $this->model->validateContact();
+
+                $page = 'contact';
+                if ($this->model->valid) {
+                    $page = 'thanks';
+                } else {
                     $page = 'contact';
                 }
+
                 break;
             case 'register':
-                $data = validateRegistration();
-                if ($data['valid'] === true) {
+                require_once "./models/user_model.php";
+                $this->model = new User();
+                $this->model->validateRegistration();
+                if ($this->model->valid) {
                     $page = 'login';
+                } else {
+                    $page = 'register';
                 }
                 break;
             case 'login':
-                $data = validateLogin();
-                if ($data['valid'] === true) {
-                    logUserIn($data);
+                require_once "./models/user_model.php";
+
+                $this->model = new User();
+                $this->model->validateLogin();
+
+                if ($this->model->valid) {
+                    logUserIn($this->model->name);
                     $page = 'home';
+                } else {
+                    $page = 'login';
                 }
                 break;
             case 'about':
@@ -57,30 +73,35 @@ class PageController
 
     private function showResponsePage()
     {
+        $this->model->createMenu();
         switch ($this->model->page) {
             case 'home':
                 include_once "./views/home_doc.php";
-                $view = new HomeDoc();
+                $view = new HomeDoc($this->model);
                 break;
             case 'about':
                 include_once "./views/about_doc.php";
-                $view = new AboutDoc();
+                $view = new AboutDoc($this->model);
                 break;
             case 'contact':
                 include_once "./views/contact_form.php";
-                $view = new ContactForm();
+                $view = new ContactForm($this->model);
+                break;
+            case 'thanks':
+                include_once "./views/contact_thanks_doc.php";
+                $view = new ContactThanks($this->model);
                 break;
             case 'login':
                 include_once "./views/login_form.php";
-                $view = new LoginForm();
+                $view = new LoginForm($this->model);
                 break;
             case 'register':
                 include_once "./views/registration_form.php";
-                $view = new RegistrationForm();
+                $view = new RegistrationForm($this->model);
                 break;
             case 'unknown':
                 include_once "./views/basic_doc.php";
-                $view = new BasicDoc();
+                $view = new BasicDoc($this->model);
                 break;
         }
         $view->show();

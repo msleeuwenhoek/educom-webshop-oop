@@ -11,26 +11,26 @@ class RegistrationForm extends FormsDoc
     protected function showForm()
     {
         echo '<label for="name">Name:</label>
-            <input class="form-field" type="text" id="name" name="name" value="" />
-            <span class="error">* </span>
+            <input class="form-field" type="text" id="name" name="name" value="' . $this->model->name . '" />
+            <span class="error">* ' . $this->model->nameErr . '</span>
 
             <br />
 
             <label for="email">Email:</label>
-            <input class="form-field" type="text" id="email" name="email" value="" />
-            <span class="error">* </span>
+            <input class="form-field" type="text" id="email" name="email" value="' . $this->model->email . '" />
+            <span class="error">*' . $this->model->emailErr . ' </span>
 
             <br />
             
             <label for="password">Password:</label>
-            <input class="form-field" type="text" id="password" name="password" value="" />
-            <span class="error">* </span>
+            <input class="form-field" type="text" id="password" name="password" value="' . $this->model->password . '" />
+            <span class="error">* ' . $this->model->passwordErr . '</span>
 
             <br />
 
             <label for="confirm_password">Confirm password:</label>
-            <input class="form-field" type="text" id="confirm_password" name="confirm_password" value="" />
-            <span class="error">*</span>
+            <input class="form-field" type="text" id="confirm_password" name="confirm_password" value="' . $this->model->confirm_password . '" />
+            <span class="error">* ' . $this->model->confirm_passwordErr . '</span>
 
             <br />
 
