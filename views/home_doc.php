@@ -5,7 +5,7 @@ class HomeDoc extends BasicDoc
 {
     protected function showTabTitle()
     {
-        echo "Home";
+        echo 'Home';
     }
     protected function showHeader()
     {

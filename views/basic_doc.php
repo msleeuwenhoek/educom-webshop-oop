@@ -1,6 +1,7 @@
 <?php
 require_once "html_doc.php";
 
+
 class BasicDoc extends HtmlDoc
 {
 
